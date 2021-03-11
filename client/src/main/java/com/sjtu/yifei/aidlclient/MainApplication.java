@@ -14,7 +14,7 @@ public class MainApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        IBridge.init(this, "com.sjtu.yifei.aidlserver", IBridge.AbridgeType.MESSENGER);
+        IBridge.init(this, "com.sjtu.yifei.aidlserver", IBridge.AbridgeType.AIDL);
     }
 
     @Override

@@ -9,5 +9,8 @@ package com.sjtu.yifei;
  * 修改备注：
  */
 public interface AbridgeCallBack {
+    /**
+     * @param message 收到的消息内容
+     */
     void receiveMessage(String message);
 }

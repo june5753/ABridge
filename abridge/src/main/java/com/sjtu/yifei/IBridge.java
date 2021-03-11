@@ -15,9 +15,7 @@ import android.support.annotation.NonNull;
 
 public final class IBridge {
 
-    public enum AbridgeType {
-        AIDL, MESSENGER
-    }
+    public enum AbridgeType {AIDL, MESSENGER}
 
     private IBridge() {
         throw new UnsupportedOperationException("u can't instantiate me...");

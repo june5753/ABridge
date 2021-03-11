@@ -1,5 +1,6 @@
 package com.sjtu.yifei;
 
+import android.annotation.SuppressLint;
 import android.app.Application;
 import android.content.ComponentName;
 import android.content.Context;
@@ -85,6 +86,7 @@ final class AbridgeMessengerManager {
     }
 
     private Messenger replyMessenger = new Messenger(new Handler() {
+        @SuppressLint("HandlerLeak")
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
