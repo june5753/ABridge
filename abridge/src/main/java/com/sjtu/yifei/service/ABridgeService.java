@@ -1,5 +1,6 @@
 package com.sjtu.yifei.service;
 
+import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
@@ -21,6 +22,15 @@ public class ABridgeService extends Service {
 
     public ABridgeService() {
         Log.e(TAG, "launched");
+    }
+
+    @Override
+    public void onCreate() {
+        Log.e(TAG, "onCreate");
+        super.onCreate();
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            startForeground(110, new Notification());
+        }
     }
 
     @Override
@@ -131,7 +141,7 @@ public class ABridgeService extends Service {
                 return;
             }
 
-            Log.d(TAG, "client died" );
+            Log.d(TAG, "client died");
             mClients.remove(this);
         }
     }

@@ -25,6 +25,7 @@ public class TestAIDLActivity extends AppCompatActivity implements View.OnClickL
         tv_age = findViewById(R.id.tv_age);
         tv_user = findViewById(R.id.tv_user);
         findViewById(R.id.btn_add).setOnClickListener(this);
+
         IBridge.registerAIDLCallBack(callBack = new AbridgeCallBack() {
             @Override
             public void receiveMessage(String message) {

@@ -5,12 +5,7 @@ import android.os.Message;
 import android.support.annotation.NonNull;
 
 /**
- * 类描述：
- * 创建人：yifei
- * 创建时间：2018/5/15
- * 修改人：
- * 修改时间：
- * 修改备注：
+ * test 2
  */
 
 public final class IBridge {
