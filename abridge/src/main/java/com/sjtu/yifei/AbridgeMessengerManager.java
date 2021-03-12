@@ -19,6 +19,7 @@ import java.util.List;
 /**
  * 类描述： 创建人：yifei 创建时间：2018/12/18 修改人： 修改时间： 修改备注：
  */
+@Deprecated()
 final class AbridgeMessengerManager {
     private static final String TAG = "AbridgeMessengerManager";
     private static final String BIND_SERVICE_ACTION = "android.intent.action.ICALL_MESSENGER_YIFEI";

@@ -4,6 +4,7 @@ import android.app.Notification;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
+import android.os.Parcel;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
 import android.util.Log;
@@ -14,6 +15,9 @@ import com.sjtu.yifei.aidl.ISenderAidlInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 服务端 同时把服务端配置到另外的进程 -> android:process=”:aidl”
+ */
 public class ABridgeService extends Service {
 
     private static final String TAG = "ICallService";
@@ -102,6 +106,27 @@ public class ABridgeService extends Service {
             Log.d(TAG, "unregisterCallback " + cb);
             mCallbacks.unregister(cb);
         }
+
+        /**此处可用于权限拦截**/
+        @Override
+        public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
+            /**
+             * 包名验证方式
+             */
+            String packageName = null;
+            String[] packages = getPackageManager().getPackagesForUid(getCallingUid());
+            if (packages != null && packages.length > 0) {
+                packageName = packages[0];
+            }
+
+            //
+            if (packageName == null || !packageName.startsWith("com.sjtu.yifei")) {
+                Log.d(TAG, "onTransact 拒绝调用：" + packageName);
+                return false;
+            }
+
+            return super.onTransact(code, data, reply, flags);
+        }
     };
 
     private int findClient(IBinder token) {
@@ -145,5 +170,5 @@ public class ABridgeService extends Service {
             mClients.remove(this);
         }
     }
-
 }
+

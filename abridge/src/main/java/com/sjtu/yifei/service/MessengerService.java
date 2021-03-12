@@ -16,6 +16,7 @@ import com.sjtu.yifei.aidl.IReceiverAidlInterface;
 import java.util.ArrayList;
 import java.util.List;
 
+@Deprecated
 public class MessengerService extends Service {
     public final static String TAG = "MessengerService";
 

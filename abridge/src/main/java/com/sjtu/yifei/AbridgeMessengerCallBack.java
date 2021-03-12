@@ -7,6 +7,7 @@ import android.os.Message;
  * author: yifei
  * created at 18/6/2 下午11:52
  */
+@Deprecated
 public interface AbridgeMessengerCallBack {
     void receiveMessage(Message message);
 }

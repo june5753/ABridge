@@ -11,6 +11,8 @@ interface ISenderAidlInterface {
 
     void sendMessage(String json);
 
+    void sendMsg(in MessageModel messageModel);
+
     void registerCallback(IReceiverAidlInterface cb);
 
     void unregisterCallback(IReceiverAidlInterface cb);

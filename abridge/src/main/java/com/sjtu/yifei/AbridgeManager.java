@@ -97,6 +97,7 @@ final class AbridgeManager {
                 @Override
                 public void run() {
                     for (AbridgeCallBack medium : sList) {
+                        //TODO：转发消息 参考SLIM中消息处理 平台如何转发消息到各调用方
                         medium.receiveMessage(json);
                     }
                 }
@@ -140,6 +141,8 @@ final class AbridgeManager {
         } else {
             sApplication.startService(serviceIntent);
         }
+        //多个client可以同时绑定一个Service 但是当所有Client unbind后，Service会退出
+        //但是我们希望unbind后Service仍保持运行，这样的情况下，可以同时调用bindService和startService
         sApplication.bindService(serviceIntent, serviceConnection, Context.BIND_AUTO_CREATE);
     }
 
