@@ -43,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void onClick(View view) {
         int id = view.getId();
         if (id == R.id.acquire_info) {
-            String message = et_show_out_message.getText().toString();
+            String message = et_show_out_message.getText().toString().trim();
             IBridge.sendAIDLMessage(message);
         }
     }

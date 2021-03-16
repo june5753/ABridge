@@ -15,11 +15,12 @@ import com.sjtu.yifei.IBridge
 class MainApplication : Application() {
 
     private val mPackageName = "com.sjtu.yifei.aidlserver"
+    private val mClientId = "game"
 
     override fun onCreate() {
         super.onCreate()
         Toast.makeText(this, "init", Toast.LENGTH_SHORT).show()
-        IBridge.init(this, mPackageName, IBridge.AbridgeType.AIDL)
+        IBridge.init(this, mPackageName, mClientId)
     }
 
     override fun onTerminate() {

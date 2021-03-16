@@ -33,6 +33,8 @@ final class AbridgeManager {
     private Handler sHandler;
     private List<AbridgeCallBack> sList;
 
+    private IBinder sBinder;
+
     private AbridgeManager() {
         sList = new ArrayList<>();
     }
@@ -54,10 +56,11 @@ final class AbridgeManager {
      * @param sApplication
      * @param sServicePkgName
      */
-    public void init(Application sApplication, String sServicePkgName) {
+    public void init(Application sApplication, String sServicePkgName, String clientId) {
         this.sApplication = sApplication;
         this.sServicePkgName = sServicePkgName;
         sHandler = new Handler(sApplication.getMainLooper());
+        sBinder = new Binder(clientId);
     }
 
     public void registerRemoteCallBack(AbridgeCallBack callBack) {
@@ -86,7 +89,6 @@ final class AbridgeManager {
         }
     }
 
-    private IBinder sBinder = new Binder();
     private ISenderAidlInterface iSenderAidlInterface;
 
     private IReceiverAidlInterface iReceiverAidlInterface = new IReceiverAidlInterface.Stub() {
@@ -97,7 +99,6 @@ final class AbridgeManager {
                 @Override
                 public void run() {
                     for (AbridgeCallBack medium : sList) {
-                        //TODO：转发消息 参考SLIM中消息处理 平台如何转发消息到各调用方
                         medium.receiveMessage(json);
                     }
                 }
@@ -162,5 +163,4 @@ final class AbridgeManager {
         }
         sApplication.unbindService(serviceConnection);
     }
-
 }

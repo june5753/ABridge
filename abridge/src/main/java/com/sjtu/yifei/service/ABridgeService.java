@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ABridgeService extends Service {
 
-    private static final String TAG = "ICallService";
+    private static final String TAG = "ABridgeService";
     private List<Client> mClients = new ArrayList<>();
     private RemoteCallbackList<IReceiverAidlInterface> mCallbacks = new RemoteCallbackList<>();
 
@@ -68,7 +68,8 @@ public class ABridgeService extends Service {
             // 注册客户端死掉的通知
             token.linkToDeath(client, 0);
             mClients.add(client);
-            Log.d(TAG, token + " join , client size " + mClients.size());
+            Log.d(TAG,
+                    token + " join , client size " + mClients.size() + ",clientId:" + token.getInterfaceDescriptor());
         }
 
         @Override
@@ -118,13 +119,6 @@ public class ABridgeService extends Service {
             if (packages != null && packages.length > 0) {
                 packageName = packages[0];
             }
-
-            //
-            if (packageName == null || !packageName.startsWith("com.sjtu.yifei")) {
-                Log.d(TAG, "onTransact 拒绝调用：" + packageName);
-                return false;
-            }
-
             return super.onTransact(code, data, reply, flags);
         }
     };

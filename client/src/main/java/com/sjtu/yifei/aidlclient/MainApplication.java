@@ -8,11 +8,12 @@ import com.sjtu.yifei.IBridge;
 public class MainApplication extends Application {
 
     private final String mPackageName = "com.sjtu.yifei.aidlserver";
+    private final String mClientId = "client";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        IBridge.init(this, mPackageName, IBridge.AbridgeType.AIDL);
+        IBridge.init(this, mPackageName,mClientId);
     }
 
     @Override

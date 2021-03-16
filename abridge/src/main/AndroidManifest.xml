@@ -16,15 +16,6 @@
             </intent-filter>
         </service>
 
-        <service
-            android:name="com.sjtu.yifei.service.MessengerService"
-            android:enabled="true"
-            android:exported="true"
-            android:process=":messenger">
-            <intent-filter>
-                <action android:name="android.intent.action.ICALL_MESSENGER_YIFEI" />
-            </intent-filter>
-        </service>
     </application>
 
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"
