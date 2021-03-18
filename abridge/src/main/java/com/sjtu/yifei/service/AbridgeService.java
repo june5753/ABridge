@@ -1,30 +1,35 @@
 package com.sjtu.yifei.service;
 
 import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.app.Service;
 import android.content.Intent;
 import android.os.IBinder;
 import android.os.Parcel;
 import android.os.RemoteCallbackList;
 import android.os.RemoteException;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import com.sjtu.yifei.aidl.IReceiverAidlInterface;
 import com.sjtu.yifei.aidl.ISenderAidlInterface;
+import com.sjtu.yifei.aidl.Msg;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * 服务端 同时把服务端配置到另外的进程 -> android:process=”:aidl”
+ * @author juneyang
  */
-public class ABridgeService extends Service {
+public class AbridgeService extends Service {
 
     private static final String TAG = "ABridgeService";
-    private List<Client> mClients = new ArrayList<>();
-    private RemoteCallbackList<IReceiverAidlInterface> mCallbacks = new RemoteCallbackList<>();
+    private final List<Client> mClients = new ArrayList<>();
+    private final RemoteCallbackList<IReceiverAidlInterface> mCallbacks = new RemoteCallbackList<>();
 
-    public ABridgeService() {
+    public AbridgeService() {
         Log.e(TAG, "launched");
     }
 
@@ -32,8 +37,21 @@ public class ABridgeService extends Service {
     public void onCreate() {
         Log.e(TAG, "onCreate");
         super.onCreate();
+
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            startForeground(110, new Notification());
+            NotificationManager notificationManager = (NotificationManager) this.getSystemService(NOTIFICATION_SERVICE);
+            NotificationChannel channel = new NotificationChannel("default", "default",
+                    NotificationManager.IMPORTANCE_LOW);
+
+            notificationManager.createNotificationChannel(channel);
+
+            NotificationCompat.Builder builder = new NotificationCompat.Builder(this, "default");
+            Notification notification = builder.setContentTitle("AIDL服务正在运行")
+                    .setWhen(System.currentTimeMillis())
+                    .setAutoCancel(false)
+                    .setSmallIcon(android.R.mipmap.sym_def_app_icon)
+                    .build();
+            startForeground(1, notification);
         }
     }
 
@@ -68,8 +86,8 @@ public class ABridgeService extends Service {
             // 注册客户端死掉的通知
             token.linkToDeath(client, 0);
             mClients.add(client);
-            Log.d(TAG,
-                    token + " join , client size " + mClients.size() + ",clientId:" + token.getInterfaceDescriptor());
+            Log.d(TAG, token + " join , client size " + mClients.size() +
+                    ",clientId:" + token.getInterfaceDescriptor());
         }
 
         @Override
@@ -93,8 +111,15 @@ public class ABridgeService extends Service {
         @Override
         public void sendMessage(String message) throws RemoteException {
             Log.d(TAG, " sendMessage :" + message);
-            onSuccessCallBack(message);
+            onSuccessCallBackStr(message);
         }
+
+        @Override
+        public void sendMsg(Msg msg) {
+            Log.d(TAG, " sendMessage :" + msg.getMsg() + "time:" + msg.getTime());
+            onSuccessCallBackMsg(msg);
+        }
+
 
         @Override
         public void registerCallback(IReceiverAidlInterface cb) throws RemoteException {
@@ -111,14 +136,13 @@ public class ABridgeService extends Service {
         /**此处可用于权限拦截**/
         @Override
         public boolean onTransact(int code, Parcel data, Parcel reply, int flags) throws RemoteException {
-            /**
-             * 包名验证方式
-             */
+            //包名验证方式
             String packageName = null;
             String[] packages = getPackageManager().getPackagesForUid(getCallingUid());
             if (packages != null && packages.length > 0) {
                 packageName = packages[0];
             }
+            //其他方式验证
             return super.onTransact(code, data, reply, flags);
         }
     };
@@ -132,12 +156,25 @@ public class ABridgeService extends Service {
         return -1;
     }
 
-    private void onSuccessCallBack(String message) {
+    private void onSuccessCallBackStr(String message) {
         final int len = mCallbacks.beginBroadcast();
         for (int i = 0; i < len; i++) {
             try {
                 // 通知回调
                 mCallbacks.getBroadcastItem(i).receiveMessage(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+        mCallbacks.finishBroadcast();
+    }
+
+    private void onSuccessCallBackMsg(Msg message) {
+        final int len = mCallbacks.beginBroadcast();
+        for (int i = 0; i < len; i++) {
+            try {
+                // 通知回调
+                mCallbacks.getBroadcastItem(i).onReceive(message);
             } catch (RemoteException e) {
                 e.printStackTrace();
             }
@@ -159,7 +196,6 @@ public class ABridgeService extends Service {
             if (index < 0) {
                 return;
             }
-
             Log.d(TAG, "client died");
             mClients.remove(this);
         }

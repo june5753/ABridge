@@ -1,5 +1,6 @@
 // ICall.aidl
 package com.sjtu.yifei.aidl;
+import com.sjtu.yifei.aidl.Msg;
 
 import com.sjtu.yifei.aidl.IReceiverAidlInterface;
 
@@ -11,6 +12,7 @@ interface ISenderAidlInterface {
 
     void sendMessage(String json);
 
+    void sendMsg(in Msg msg);
 
     void registerCallback(IReceiverAidlInterface cb);
 

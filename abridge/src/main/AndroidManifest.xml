@@ -7,7 +7,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true">
         <service
-            android:name="com.sjtu.yifei.service.ABridgeService"
+            android:name="com.sjtu.yifei.service.AbridgeService"
             android:enabled="true"
             android:exported="true"
             android:process=":aidl">

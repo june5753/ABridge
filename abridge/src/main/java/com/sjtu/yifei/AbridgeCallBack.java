@@ -1,7 +1,9 @@
 package com.sjtu.yifei;
 
+import com.sjtu.yifei.aidl.Msg;
+
 /**
- * 类描述： 创建人：yifei 创建时间：2018/12/18 修改人： 修改时间： 修改备注：
+ * @author juneyang
  */
 public interface AbridgeCallBack {
     /**
@@ -10,4 +12,9 @@ public interface AbridgeCallBack {
      * @param message 收到的消息内容
      */
     void receiveMessage(String message);
+
+    /**
+     * 接收的消息 java bean格式
+     */
+    void receiveMsg(Msg msg);
 }

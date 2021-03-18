@@ -8,7 +8,7 @@
     android:paddingLeft="20dp"
     android:paddingRight="20dp"
     android:paddingTop="20dp"
-    tools:context=".MainActivity">
+    tools:context=".GameAIDLActivity">
 
     <Button
         android:id="@+id/acquire_info"

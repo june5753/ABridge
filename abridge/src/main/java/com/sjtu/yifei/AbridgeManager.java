@@ -12,16 +12,14 @@ import android.os.RemoteException;
 import android.text.TextUtils;
 import android.util.Log;
 
-;
 import com.sjtu.yifei.aidl.IReceiverAidlInterface;
 import com.sjtu.yifei.aidl.ISenderAidlInterface;
+import com.sjtu.yifei.aidl.Msg;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * 类描述： 创建人：yifei 创建时间：2018/12/18 修改人： 修改时间： 修改备注：
- */
+
 final class AbridgeManager {
     private static final String TAG = "AbridgeManager";
     private static final String BIND_SERVICE_ACTION = "android.intent.action.ICALL_AIDL_YIFEI";
@@ -89,6 +87,20 @@ final class AbridgeManager {
         }
     }
 
+    public void callRemoteMsg(Msg message) {
+        if (iSenderAidlInterface == null) {
+            Log.e(TAG, "error: ipc process not started，please make sure ipc process is alive");
+            return;
+        }
+        if (!TextUtils.isEmpty(message.getMsg())) {
+            try {
+                iSenderAidlInterface.sendMsg(message);
+            } catch (RemoteException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
     private ISenderAidlInterface iSenderAidlInterface;
 
     private IReceiverAidlInterface iReceiverAidlInterface = new IReceiverAidlInterface.Stub() {
@@ -100,6 +112,18 @@ final class AbridgeManager {
                 public void run() {
                     for (AbridgeCallBack medium : sList) {
                         medium.receiveMessage(json);
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onReceive(final Msg msg) throws RemoteException {
+            sHandler.post(new Runnable() {
+                @Override
+                public void run() {
+                    for (AbridgeCallBack medium : sList) {
+                        medium.receiveMsg(msg);
                     }
                 }
             });

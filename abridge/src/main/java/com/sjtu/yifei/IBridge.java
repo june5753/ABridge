@@ -1,11 +1,12 @@
 package com.sjtu.yifei;
 
 import android.app.Application;
-import android.os.Message;
 import android.support.annotation.NonNull;
 
+import com.sjtu.yifei.aidl.Msg;
+
 /**
- * test 2
+ * @author juneyang
  */
 
 public final class IBridge {
@@ -15,7 +16,7 @@ public final class IBridge {
     }
 
     public static void init(@NonNull final Application app, String servicePkgName, String clientId) {
-        AbridgeManager.getInstance().init(app, servicePkgName,clientId);
+        AbridgeManager.getInstance().init(app, servicePkgName, clientId);
         AbridgeManager.getInstance().startAndBindService();
     }
 
@@ -25,6 +26,11 @@ public final class IBridge {
 
     public static void sendAIDLMessage(String message) {
         AbridgeManager.getInstance().callRemote(message);
+    }
+
+    //新增java bean
+    public static void sendAIDLMsg(Msg message) {
+        AbridgeManager.getInstance().callRemoteMsg(message);
     }
 
     public static void registerAIDLCallBack(AbridgeCallBack callBack) {

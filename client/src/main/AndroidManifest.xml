@@ -13,7 +13,7 @@
         android:theme="@style/AppTheme"
         tools:ignore="GoogleAppIndexingWarning">
 
-        <activity android:name=".TestAIDLActivity">
+        <activity android:name=".ClientAIDLActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
