@@ -4,7 +4,8 @@ android {
     compileSdkVersion 27
 
     defaultConfig {
-        applicationId "com.sjtu.yifei.aidlserver"
+        //注册时需要统一服务端的包名
+        applicationId "com.fiture.platform.aidlserver"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
@@ -28,7 +29,6 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
     api project(':abridge')
-//    api "com.sjtu.yifei:abridge:${rootProject.ext.abridge_version}"
     implementation 'com.android.support:appcompat-v7:27.1.1'
     implementation 'com.android.support.constraint:constraint-layout:1.1.0'
     testImplementation 'junit:junit:4.12'
