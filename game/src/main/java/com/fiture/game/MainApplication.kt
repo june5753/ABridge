@@ -2,7 +2,7 @@ package com.fiture.game
 
 import android.app.Application
 import android.widget.Toast
-import com.sjtu.yifei.IBridge
+import com.fiture.platform.IBridge
 
 /**
  *<pre>
@@ -14,7 +14,7 @@ import com.sjtu.yifei.IBridge
  */
 class MainApplication : Application() {
 
-    private val mPackageName = "com.sjtu.yifei.aidlserver"
+    private val mPackageName = "com.fiture.platform.aidlserver"
     private val mClientId = "game"
 
     override fun onCreate() {
