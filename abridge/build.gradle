@@ -1,21 +1,11 @@
 apply plugin: 'com.android.library'
 
-ext {
-    bintrayName = 'abridge'
-    artifact = bintrayName
-    libraryName = 'abridge'
-    libraryDescription = 'abridge for android ipc'
-    libraryVersion = abridge_version
-    localRepo = '../repo-abridge'
-}
-
 android {
-    compileSdkVersion Integer.parseInt(COMPILE_SDK_VERSION)
-    buildToolsVersion BUILDTOOLS_VERSION
+    compileSdkVersion 28
 
     defaultConfig {
-        minSdkVersion Integer.parseInt(MIN_SDK_VERSION)
-        targetSdkVersion Integer.parseInt(TARGET_SDK_VERSION)
+        minSdkVersion 16
+        targetSdkVersion 28
     }
 
     buildTypes {
@@ -32,5 +22,5 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    api "com.android.support:appcompat-v7:${SUPPORT_LIB_VERSION}"
+    implementation "com.android.support:appcompat-v7:28.0.0"
 }

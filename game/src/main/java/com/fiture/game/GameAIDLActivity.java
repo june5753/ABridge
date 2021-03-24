@@ -49,16 +49,15 @@ public class GameAIDLActivity extends AppCompatActivity implements OnClickListen
                             return;
                         }
                         tvShowMsg.setText("收到次数：" + receiveCount +
-                                msg.getMsg() + "发送时间：" + msg.getTime() + "消息来自：" + msg.getFrom() + ",发送的目标：" + msg.getTo());
-
+                                msg.getMsg() + ",发送时间：" + msg.getTime() + ",消息来自：" + msg.getFrom() + ",发送的目标：" + msg.getTo());
 
                         try {
-                            Thread.sleep(2000);
+                            Thread.sleep(500);
                         } catch (InterruptedException e) {
                             e.printStackTrace();
                         }
-                        Msg msg2 = new Msg("收到后响应数据", System.currentTimeMillis(), "Game", "Game");
-                        IBridge.sendAIDLMsg(msg2);
+                        Msg newMsg = new Msg("收到后响应数据", System.currentTimeMillis(), "Game", "Game");
+                        IBridge.sendAIDLMsg(newMsg);
 
                     }
                 }

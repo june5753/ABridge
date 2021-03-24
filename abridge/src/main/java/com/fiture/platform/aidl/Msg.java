@@ -3,6 +3,9 @@ package com.fiture.platform.aidl;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+/**
+ * @author juneyang
+ */
 public class Msg implements Parcelable {
 
     private String msg;
