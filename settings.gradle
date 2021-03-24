@@ -1,3 +1,2 @@
-include ':testaidl'
 include ':game'
 include ':server', ':client', ':abridge'

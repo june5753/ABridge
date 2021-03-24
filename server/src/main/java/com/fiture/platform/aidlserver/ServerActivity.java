@@ -13,6 +13,7 @@ import com.fiture.platform.aidl.Msg;
 
 /**
  * Server端
+ * @author juneyang
  */
 public class ServerActivity extends AppCompatActivity implements View.OnClickListener {
 

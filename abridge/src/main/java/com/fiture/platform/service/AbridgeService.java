@@ -25,7 +25,7 @@ import java.util.List;
  */
 public class AbridgeService extends Service {
 
-    private static final String TAG = "ABridgeService";
+    private static final String TAG = "AbridgeService";
     private final List<Client> mClients = new ArrayList<>();
     private final RemoteCallbackList<IReceiverAidlInterface> mCallbacks = new RemoteCallbackList<>();
 

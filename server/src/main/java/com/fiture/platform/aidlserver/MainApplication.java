@@ -4,19 +4,18 @@ import android.app.Application;
 
 import com.fiture.platform.IBridge;
 
-/**
- * [description] author: yifei created at 18/6/3 下午8:40
- */
 
+/**
+ * @author juneyang
+ */
 public class MainApplication extends Application {
 
     private final String mPackageName = "com.fiture.platform.aidlserver";
-    private final String mClientId = "aidlserver";
 
     @Override
     public void onCreate() {
         super.onCreate();
-        IBridge.init(this, mPackageName, mClientId);
+        IBridge.init(this, mPackageName);
     }
 
     @Override

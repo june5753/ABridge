@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -19,8 +20,7 @@ import com.fiture.platform.aidl.Msg;
  *  version: 1.0
  * </pre>
  */
-public class GameAIDLActivity extends AppCompatActivity implements View.OnClickListener {
-
+public class GameAIDLActivity extends AppCompatActivity implements OnClickListener {
     private TextView tvShowMsg;
     private EditText etShowMsg;
     private AbridgeCallBack callBack;
